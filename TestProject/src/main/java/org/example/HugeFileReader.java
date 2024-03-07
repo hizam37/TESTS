@@ -1,20 +1,15 @@
 package org.example;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.LineIterator;
-
 import java.io.*;
 import java.util.*;
-
 public class HugeFileReader {
 
     public static void main(String[] args) throws IOException {
 
 
-        String OutputFile = "добавьте свое местоположение, в котором вы хотите сохранить свой файл.";
+        String OutputFile = "Файл создан";
 
-        StringBuilder stringBuilder = new StringBuilder();
-
-        LineIterator bufferedReader = FileUtils.lineIterator(new File(args[0]),"UTF-8");
+        long start = System.currentTimeMillis();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(args[0]));
 
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(OutputFile));
 
@@ -22,9 +17,9 @@ public class HugeFileReader {
 
         List<Map<String, Integer>> positionOfNumbers = new ArrayList<>();
 
-        String line = bufferedReader.nextLine();
+        String line = bufferedReader.readLine();
 
-        while (bufferedReader.hasNext()) {
+        while (!(line ==null)) {
 
             String[] columns = getColumns(line);
 
@@ -135,12 +130,11 @@ public class HugeFileReader {
                 }
             }
 
-            line = bufferedReader.nextLine();
+            line = bufferedReader.readLine();
 
         }
 
-
-        stringBuilder.append("Результирующее количество групп, содержащих более одного элемента ").append(numberOfGroups.stream().filter(s -> s.size() > 1).count());
+        bufferedWriter.write("Результирующее количество групп, содержащих более одного элемента "+ numberOfGroups.stream().filter(s -> s.size() > 1).count());
 
         numberOfGroups.sort(Comparator.comparingInt(s -> -s.size()));
 
@@ -149,23 +143,25 @@ public class HugeFileReader {
         for (Set<String> perGroup : numberOfGroups) {
 
             iterationOfGroups++;
-
-            stringBuilder.append("\n").append("Группа ").append(iterationOfGroups).append("\n");
+            bufferedWriter.newLine();
+            bufferedWriter.write("Группа " + iterationOfGroups);
+            bufferedWriter.newLine();
 
             for (String setsOfNumbers : perGroup) {
 
-                stringBuilder.append(setsOfNumbers).append("\n");
+                bufferedWriter.newLine();
+                bufferedWriter.write(setsOfNumbers);
 
             }
         }
 
-        bufferedWriter.write(stringBuilder.toString());
 
         bufferedWriter.close();
 
         bufferedReader.close();
 
-        System.out.println("Finished printing");
+        long end = System.currentTimeMillis()-start;
+        System.out.println(end+" ms");
 
     }
 
