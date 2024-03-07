@@ -5,7 +5,7 @@ import org.apache.commons.io.LineIterator;
 import java.io.*;
 import java.util.*;
 
-public class FileSplitter {
+public class HugeFileReader {
 
     public static void main(String[] args) throws IOException {
 
@@ -13,7 +13,7 @@ public class FileSplitter {
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        LineIterator bufferedReader = FileUtils.lineIterator(new File("C:\\Users\\DANIIL\\Downloads\\TESTS-main\\lng.txt"),"UTF-8");
+        LineIterator bufferedReader = FileUtils.lineIterator(new File(args[0]),"UTF-8");
 
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(OutputFile));
 
