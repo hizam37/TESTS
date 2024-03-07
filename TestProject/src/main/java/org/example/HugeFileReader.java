@@ -9,6 +9,7 @@ public class HugeFileReader {
 
     public static void main(String[] args) throws IOException {
 
+
         String OutputFile = "добавьте свое местоположение, в котором вы хотите сохранить свой файл.";
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -163,6 +164,8 @@ public class HugeFileReader {
         bufferedWriter.close();
 
         bufferedReader.close();
+
+        System.out.println("Finished printing");
 
     }
 
