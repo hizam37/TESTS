@@ -1,16 +1,19 @@
 package org.example;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.LineIterator;
+
 import java.io.*;
 import java.util.*;
 
-public class Main {
-    public static void main(String[] args) throws IOException {
+public class FileSplitter {
 
+    public static void main(String[] args) throws IOException {
 
         String OutputFile = "добавьте свое местоположение, в котором вы хотите сохранить свой файл.";
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(args[0]));
+        LineIterator bufferedReader = FileUtils.lineIterator(new File("C:\\Users\\DANIIL\\Downloads\\TESTS-main\\lng.txt"),"UTF-8");
 
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(OutputFile));
 
@@ -18,9 +21,9 @@ public class Main {
 
         List<Map<String, Integer>> positionOfNumbers = new ArrayList<>();
 
-        String line = bufferedReader.readLine();
+        String line = bufferedReader.nextLine();
 
-        while (line != null) {
+        while (bufferedReader.hasNext()) {
 
             String[] columns = getColumns(line);
 
@@ -131,7 +134,7 @@ public class Main {
                 }
             }
 
-            line = bufferedReader.readLine();
+            line = bufferedReader.nextLine();
 
         }
 
